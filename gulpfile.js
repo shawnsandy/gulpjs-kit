@@ -6,6 +6,6 @@ gulp.task('default', function(){
 });
 gulp.task('clean', function(){
   // place code for your default task here
-  gulp.src('production/', {read: false})
+  gulp.src('dist/', {read: false})
   .pipe(clean());
 });
