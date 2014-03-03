@@ -8,25 +8,17 @@ var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var watch = require('gulp-watch');
 
-//folder varibles
+/*********folder varibles*********/
+var gulp_build = 'build'; //your build folder (rename to friendlier)
 
-var output = 'build/',
-    scriptsPath = './src/scripts/';
-
-function getFolders(dir){
-    return fs.readdirSync(dir)
-        .filter(function(file){
-            return fs.statSync(path.join(dir, file)).isDirectory();
-        });
-}
 
 gulp.task('default', ['styles','htmlpages','scripts','fonts'],function(){
     // place code for your default task here
 });
 
 gulp.task('clean', function(){
-// clean up your output dir name dist or build
-    gulp.src('build', {read: false})
+// clean up your buildFolder dir name dist or build
+    gulp.src('./'+gulp_build, {read: false})
         .pipe(clean());
 });
 
@@ -34,9 +26,9 @@ gulp.task('clean', function(){
 gulp.task('styles', function(){
     //minify and move your styles
     gulp.src('./src/css/*.css')
-        .pipe(gulp.dest(output+'/css/'));
+        .pipe(gulp.dest(gulp_build+'/css/'));
     gulp.src('./bootstrap/dist/css/*.css')
-        .pipe(gulp.dest(output+'/bootstrap/'))
+        .pipe(gulp.dest(gulp_build+'/bootstrap/'))
 
 });
 
@@ -44,19 +36,19 @@ gulp.task('styles', function(){
 gulp.task('htmlpages', function(){
     //html task
     gulp.src(['./src/*.html','./src/*.png','./src/fonts/*.*'])
-        .pipe(gulp.dest(output+'/'));//html task
+        .pipe(gulp.dest(gulp_build+'/build/'));//html task
     gulp.src('./src/images/*.*')
-        .pipe(gulp.dest(output+'/images/'));
+        .pipe(gulp.dest(gulp_build+'/build/images/'));
 });
 
 gulp.task('scripts',function(){
     //javascripts tasks
     gulp.src('./src/js/*.*')
         .pipe(uglify())
-        .pipe(gulp.dest(output+'/js/'));
+        .pipe(gulp.dest(gulp_build+'/js/'));
     gulp.src('./src/js/vendor/*.*')
         .pipe(uglify())
-        .pipe(gulp.dest(output+'/js/vendor/'));
+        .pipe(gulp.dest(gulp_build+'/build/js/vendor/'));
 });
 
 gulp.task('fonts',function(){
@@ -66,7 +58,7 @@ gulp.task('fonts',function(){
 //    copy files/dependencies froom root to the source folder
 gulp.task("srcbuild", function(){
     gulp.src('./bootstrap/dist/css/*.css')
-        .pipe(gulp.dest('./src/bootstrap/css'))
+        .pipe(gulp.dest('src/bootstrap/css'))
 });
 
 
