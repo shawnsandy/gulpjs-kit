@@ -4,7 +4,7 @@ var minifycss = require('gulp-minify-css');
 var util = require('gulp-util');
 var uglify = require('gulp-uglify');
 
-gulp.task('default', function(){
+gulp.task('default', ['styles','htmlpages','scripts'],function(){
   // place code for your default task here
 });
 
@@ -18,14 +18,26 @@ gulp.task('clean', function(){
 
 gulp.task('styles', function(){
    //minify and move your styles
+    gulp.src('./src/css/*.css')
+        .pipe(gulp.dest('build/css'));
+//    gulp.src('./src/css/main.css')
+//        .pipe(minifycss())
+//    pipe(gulp.dest('bulid/css/'));
+
+
 });
 
 gulp.task('htmlpages', function(){
     //html task
+    gulp.src(['./src/*.html','./src/*.png'])
+        .pipe(gulp.dest('build/'));
 });
 
 gulp.task('scripts',function(){
     //javascripts tasks
+    gulp.src(['./src/js/*.js','./src/js/vendor/*.js'])
+        .pipe(uglify())
+        .pipe(gulp.dest('build/js/'));
 });
 
 
