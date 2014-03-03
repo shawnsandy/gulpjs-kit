@@ -1,48 +1,74 @@
 var gulp = require('gulp');
+var path = require('path');
+var fs = require('fs');
 var clean = require('gulp-clean');
 var minifycss = require('gulp-minify-css');
 var util = require('gulp-util');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var watch = require('gulp-watch');
 
-gulp.task('default', ['styles','htmlpages','scripts'],function(){
-  // place code for your default task here
+//folder varibles
+
+var output = 'build/',
+    scriptsPath = './src/scripts/';
+
+function getFolders(dir){
+    return fs.readdirSync(dir)
+        .filter(function(file){
+            return fs.statSync(path.join(dir, file)).isDirectory();
+        });
+}
+
+gulp.task('default', ['styles','htmlpages','scripts','fonts'],function(){
+    // place code for your default task here
 });
 
 gulp.task('clean', function(){
 // clean up your output dir name dist or build
-// maybe change the die name build to something sensible -- like your app_name
-  gulp.src('build/', {read: false})
-  .pipe(clean());
+    gulp.src('build', {read: false})
+        .pipe(clean());
 });
 
-
+//styles
 gulp.task('styles', function(){
-   //minify and move your styles
+    //minify and move your styles
     gulp.src('./src/css/*.css')
-        .pipe(gulp.dest('build/css/'))
-//        .pipe(rename('main.min.css'))
-//        .pipe(minifycss())
-//        .pipe(gulp.dest('build/css/'));
-});
-
-gulp.task('minifycss', function(){
-    gulp.src('./src/css/main.css')
-        .pipe(gulp.dest('bulid/css/'));
+        .pipe(gulp.dest(output+'/css/'));
+    gulp.src('./bootstrap/dist/css/*.css')
+        .pipe(gulp.dest(output+'/bootstrap/'))
 
 });
+
 
 gulp.task('htmlpages', function(){
     //html task
-    gulp.src('./src/*.html')
-        .pipe(gulp.dest('build/'));
+    gulp.src(['./src/*.html','./src/*.png','./src/fonts/*.*'])
+        .pipe(gulp.dest(output+'/'));//html task
+    gulp.src('./src/images/*.*')
+        .pipe(gulp.dest(output+'/images/'));
 });
 
 gulp.task('scripts',function(){
     //javascripts tasks
-    gulp.src(['./src/js/*.js','./src/js/vendor/*.js'])
+    gulp.src('./src/js/*.*')
         .pipe(uglify())
-        .pipe(gulp.dest('build/js/'));
+        .pipe(gulp.dest(output+'/js/'));
+    gulp.src('./src/js/vendor/*.*')
+        .pipe(uglify())
+        .pipe(gulp.dest(output+'/js/vendor/'));
 });
 
+gulp.task('fonts',function(){
+
+});
+
+//    copy files/dependencies froom root to the source folder
+gulp.task("srcbuild", function(){
+    gulp.src('./bootstrap/dist/css/*.css')
+        .pipe(gulp.dest('./src/bootstrap/css'))
+});
+
+
+gulp.task('test', function(){})
 
