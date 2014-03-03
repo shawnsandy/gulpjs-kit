@@ -13,7 +13,7 @@ gulp.task('default', ['styles','htmlpages','scripts','fonts'],function(){
 gulp.task('clean', function(){
 // clean up your output dir name dist or build
 // maybe change the die name build to something sensible -- like your app_name
-    gulp.src('build/', {read: false})
+    gulp.src('build', {read: false})
         .pipe(clean());
 });
 
@@ -22,8 +22,8 @@ gulp.task('styles', function(){
     //minify and move your styles
     gulp.src('./src/css/*.css')
         .pipe(gulp.dest('build/css/'));
-    gulp.src('./src/bootstrap/dist/css/*.css')
-        .pipe(gulp.dest('build/bootstrap/dist/'))
+    gulp.src('./bootstrap/dist/css/*.css')
+        .pipe(gulp.dest('build/bootstrap/'))
 
 });
 
@@ -55,7 +55,8 @@ gulp.task('fonts',function(){
         .pipe(gulp.dest('build/fonts/open-sans/'));
 });
 
-gulp.task("devbuild", function(){
+//    copy files/dependencies froom root to the source folder
+gulp.task("srcbuild", function(){
     gulp.src('./bootstrap/dist/css/*.css')
         .pipe(gulp.dest('./src/build/bootstrap/dist/'))
 });
