@@ -28,14 +28,13 @@ gulp.task('styles', function(){
 
 gulp.task('minifycss', function(){
     gulp.src('./src/css/main.css')
-
         .pipe(gulp.dest('bulid/css/'));
 
 });
 
 gulp.task('htmlpages', function(){
     //html task
-    gulp.src(['./src/*.html','./src/*.png'])
+    gulp.src('./src/*.html')
         .pipe(gulp.dest('build/'));
 });
 
