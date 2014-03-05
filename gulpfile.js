@@ -20,8 +20,12 @@ function getFolders(dir){
 /*********
  * folder varibles
  * *********/
-var gulp_build = 'build'; //your build folder (rename to friendlier)
-
+var gulp_build = 'build'; //your build folder -- user friendly names are cool
+// src directories
+var src_scripts = 'src/sripts/',
+    src_css = 'src/css/',
+    src_files = 'src/',
+    src_images = 'src_images/';
 
 gulp.task('default', ['styles','htmlpages','scripts','fonts'],function(){
     // place code for your default task here
