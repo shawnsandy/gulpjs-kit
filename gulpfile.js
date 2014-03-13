@@ -8,8 +8,9 @@ var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
 var print = require('gulp-print');
 var watch = require('gulp-watch');
+var changed = require('gulp-changed');
 
-var srcDir = './src/'
+var srcDir = './src/';
 var scriptsPath = srcDir +'js/';
 var buildPath = 'build/';
 
@@ -30,14 +31,14 @@ gulp.task('scripts', function() {
 
         var src_folders = path.join(scriptsPath, folder + '/*.js');
         var js_folder = path.join(srcDir, 'js/*.js');
+
         // find/join the directories
         // minify
         // write to output
-
         return gulp.src(src_folders)
-            .pipe(watch())
+            .pipe(changed(buildPath+'/js/'))
             .pipe(print())
-            .pipe(gulp.dest('build/' + folder + '/'));
+            .pipe(gulp.dest(buildPath + '/js/' + folder));
 
     });
 
@@ -45,6 +46,7 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('html_files', function(){
+    //get any file in src/root
    gulp.src([srcDir + '/*.*'])
        .pipe(print())
        .pipe(gulp.dest(buildPath));
@@ -60,4 +62,6 @@ gulp.task('cleanup', function(){
 
 });
 
-gulp.task('default', ['html_files','scripts']);
+
+
+gulp.task('default', ['html_files','scripts'], function(){});
