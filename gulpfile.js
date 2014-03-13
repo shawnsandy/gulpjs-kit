@@ -11,117 +11,162 @@ var watch = require('gulp-watch');
 var changed = require('gulp-changed');
 var streamque = require('streamqueue');
 
+//  create some useful variables
 var srcDir = './src/';
-var scriptsPath = srcDir +'js/';
+var scriptsPath = srcDir + 'js/';
 var buildPath = 'build/';
 
 function getFolders(dir) {
     return fs.readdirSync(dir)
-        .filter(function(file) {
+        .filter(function (file) {
             return fs.statSync(path.join(dir, file)).isDirectory();
         });
 }
 
-gulp.task('scripts', function() {
+gulp.task('scripts', function () {
 
-    var folders = getFolders(scriptsPath);
-
-    var tasks = folders.map(function(folder) {
-
-        var src_folders = path.join(scriptsPath, folder + '/*.js');
-        var js_folder = path.join(srcDir, 'js/*.js');
-
-        // find/join the directories
-        // minify
-        // write to output
-        return gulp.src(src_folders)
-            .pipe(changed(buildPath+'/js/'))
-            .pipe(print())
-            .pipe(gulp.dest(buildPath + '/js/' + folder));
-
-    });
-
-    return es.concat.apply(null, tasks);
-});
-
-gulp.task('html_files', function(){
-    //collect all files in root di
-    //move to dest folder
-    gulp.src(srcDir + '/*')
-       .pipe(print())
-       .pipe(gulp.dest(buildPath));
-
-});
-
-gulp.task('images', ['custom_images'], function(){
-
-    gulp.src(srcDir + 'images/*')
+    var file_dir = 'js/';
+    gulp.src(srcDir + file_dir + '*')
+        .pipe(changed(buildPath + file_dir))
         .pipe(print())
-        .pipe(gulp.dest(buildPath + "images/"));
+        .pipe(gulp.dest(buildPath + file_dir));
 
-});
-
-
-gulp.task('custom_images', function(){
     //custom folders
-    var custom_folders = srcDir + "images/"
+
+    var custom_folders = srcDir + file_dir
     var folders = getFolders(custom_folders);
-    var tasks = folders.map(function(folder) {
+    var tasks = folders.map(function (folder) {
         var src_folders = path.join(custom_folders, folder + '/*');
         // find/join the directories
         // minify
         // write to output
         return gulp.src(src_folders)
-            .pipe(changed(buildPath+'/images/'))
+            .pipe(changed(buildPath + file_dir))
             .pipe(print())
-            .pipe(gulp.dest(buildPath + '/images/' + folder));
+            .pipe(gulp.dest(buildPath + file_dir + folder));
 
     });
 
     return es.concat.apply(null, tasks);
 });
 
-
-gulp.task('fonts',function(){
+gulp.task('html_files', function () {
+    //collect all files in root di
+    //move to dest folder
+    gulp.src(srcDir + '/*')
+        .pipe(print())
+        .pipe(gulp.dest(buildPath));
 
 });
 
-/*
-custom folders
- */
+gulp.task('images', function () {
 
-gulp.task('custom', function(){
+    var file_dir = 'images/';
+    gulp.src(srcDir + file_dir + '*')
+        .pipe(changed(buildPath + file_dir))
+        .pipe(print())
+        .pipe(gulp.dest(buildPath + file_dir));
+
     //custom folders
-    var custom_folders = srcDir + "custom/"
+
+    var custom_folders = srcDir + file_dir
     var folders = getFolders(custom_folders);
-    var tasks = folders.map(function(folder) {
-        var src_folders = path.join(scriptsPath, folder + '/*.js');
+    var tasks = folders.map(function (folder) {
+        var src_folders = path.join(custom_folders, folder + '/*');
         // find/join the directories
         // minify
         // write to output
         return gulp.src(src_folders)
-            .pipe(changed(buildPath+'/js/'))
+            .pipe(changed(buildPath + file_dir))
             .pipe(print())
-            .pipe(gulp.dest(buildPath + '/js/' + folder));
+            .pipe(gulp.dest(buildPath + file_dir + folder));
 
     });
 
     return es.concat.apply(null, tasks);
+
 });
 
-gulp.task('cleanup', function(){
+
+gulp.task('fonts', function () {
+
+    var file_dir = 'images/';
+    gulp.src(srcDir + file_dir + '*')
+        .pipe(changed(buildPath + file_dir))
+        .pipe(print())
+        .pipe(gulp.dest(buildPath + file_dir));
+
+    //custom folders
+
+    var custom_folders = srcDir + file_dir
+    var folders = getFolders(custom_folders);
+    var tasks = folders.map(function (folder) {
+        var src_folders = path.join(custom_folders, folder + '/*');
+        // find/join the directories
+        // minify
+        // write to output
+        return gulp.src(src_folders)
+            .pipe(changed(buildPath + file_dir))
+            .pipe(print())
+            .pipe(gulp.dest(buildPath + file_dir + folder));
+
+    });
+
+    return es.concat.apply(null, tasks);
+
+});
+
+
+gulp.task('cleanup', function () {
 
     gulp.src('./build/', {read: false})
-
         .pipe(clean());
 
 });
 
 
-//    copy files/dependencies froom root to the source folder
-gulp.task("srcbuild", function(){
+/*copy files/dependencies froom root to the source folder */
+
+gulp.task("srcbuild", function () {
+
 //    gulp.src('./bootstrap/dist/css/*.css')
-//        .pipe(gulp.dest('./src/build/bootstrap/dist/'))
+//        .pipe(gulp.dest('./src/build/bootstrap/'))
+
 });
 
-gulp.task('default', ['html_files','scripts','fonts','images'], function(){});
+
+/*copies all the files from your src directory,
+ src/dir -- (will not copy from scr/dir/dir )
+ into your build
+ made for simple structure apps
+ */
+gulp.task('copy_all', function () {
+    //file directory
+    var file_dir = '/';
+    gulp.src(srcDir + file_dir + '*')
+        .pipe(changed(buildPath + file_dir))
+        .pipe(print())
+        .pipe(gulp.dest(buildPath + file_dir));
+
+    //custom folders
+    var custom_folders = srcDir + file_dir
+    var folders = getFolders(custom_folders);
+    var tasks = folders.map(function (folder) {
+        var src_folders = path.join(custom_folders, folder + '/*');
+        // find/join the directories
+        // minify
+        // write to output
+        return gulp.src(src_folders)
+            .pipe(changed(buildPath + file_dir))
+            .pipe(print())
+            .pipe(gulp.dest(buildPath + file_dir + folder));
+
+    });
+
+    return es.concat.apply(null, tasks);
+
+});
+
+
+gulp.task('default', ['html_files', 'scripts', 'fonts', 'images'], function () {
+});
