@@ -24,8 +24,6 @@ function getFolders(dir) {
 
 gulp.task('scripts', function() {
 
-
-
     var folders = getFolders(scriptsPath);
 
     var tasks = folders.map(function(folder) {
@@ -47,17 +45,69 @@ gulp.task('scripts', function() {
 });
 
 gulp.task('html_files', function(){
-    //get any file in src/root
-   //gulp.src([srcDir + '/*'])
-    return streamque({objectMode: true},
-    gulp.src(srcDir + '/*'),
-    gulp.src(srcDir + '/images/*')
-    )
+    //collect all files in root di
+    //move to dest folder
+    gulp.src(srcDir + '/*')
        .pipe(print())
        .pipe(gulp.dest(buildPath));
+
+});
+
+gulp.task('images', ['custom_images'], function(){
+
+    gulp.src(srcDir + 'images/*')
+        .pipe(print())
+        .pipe(gulp.dest(buildPath + "images/"));
+
 });
 
 
+gulp.task('custom_images', function(){
+    //custom folders
+    var custom_folders = srcDir + "images/"
+    var folders = getFolders(custom_folders);
+    var tasks = folders.map(function(folder) {
+        var src_folders = path.join(custom_folders, folder + '/*');
+        // find/join the directories
+        // minify
+        // write to output
+        return gulp.src(src_folders)
+            .pipe(changed(buildPath+'/images/'))
+            .pipe(print())
+            .pipe(gulp.dest(buildPath + '/images/' + folder));
+
+    });
+
+    return es.concat.apply(null, tasks);
+});
+
+
+gulp.task('fonts',function(){
+
+});
+
+/*
+custom folders
+ */
+
+gulp.task('custom', function(){
+    //custom folders
+    var custom_folders = srcDir + "custom/"
+    var folders = getFolders(custom_folders);
+    var tasks = folders.map(function(folder) {
+        var src_folders = path.join(scriptsPath, folder + '/*.js');
+        // find/join the directories
+        // minify
+        // write to output
+        return gulp.src(src_folders)
+            .pipe(changed(buildPath+'/js/'))
+            .pipe(print())
+            .pipe(gulp.dest(buildPath + '/js/' + folder));
+
+    });
+
+    return es.concat.apply(null, tasks);
+});
 
 gulp.task('cleanup', function(){
 
@@ -68,5 +118,10 @@ gulp.task('cleanup', function(){
 });
 
 
+//    copy files/dependencies froom root to the source folder
+gulp.task("srcbuild", function(){
+//    gulp.src('./bootstrap/dist/css/*.css')
+//        .pipe(gulp.dest('./src/build/bootstrap/dist/'))
+});
 
-gulp.task('default', ['html_files','scripts'], function(){});
+gulp.task('default', ['html_files','scripts','fonts','images'], function(){});
