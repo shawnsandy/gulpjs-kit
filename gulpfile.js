@@ -9,6 +9,7 @@ var clean = require('gulp-clean');
 var print = require('gulp-print');
 var watch = require('gulp-watch');
 var changed = require('gulp-changed');
+var streamque = require('streamqueue');
 
 var srcDir = './src/';
 var scriptsPath = srcDir +'js/';
@@ -47,7 +48,11 @@ gulp.task('scripts', function() {
 
 gulp.task('html_files', function(){
     //get any file in src/root
-   gulp.src([srcDir + '/*.*'])
+   //gulp.src([srcDir + '/*'])
+    return streamque({objectMode: true},
+    gulp.src(srcDir + '/*'),
+    gulp.src(srcDir + '/images/*')
+    )
        .pipe(print())
        .pipe(gulp.dest(buildPath));
 });

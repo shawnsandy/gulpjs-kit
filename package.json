@@ -30,6 +30,7 @@
     "gulp-rename": "~1.1.0",
     "gulp-watch": "^0.5.0",
     "gulp-print": "^1.0.3",
-    "gulp-changed": "^0.2.1"
+    "gulp-changed": "^0.2.1",
+    "streamqueue": "0.0.5"
   }
 }
