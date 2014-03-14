@@ -11,6 +11,13 @@ var watch = require('gulp-watch');
 var changed = require('gulp-changed');
 var streamque = require('streamqueue');
 
+/*
+install gulp
+npm install gulp gulp-util --save-dev
+install required gulp plugins
+npm install gulp-concat gulp-rename gulp-uglify gulp-clean gulp-watch gulp-changed streamqueue --save-dev
+*/
+
 //  create some useful variables
 var srcDir = './src/';
 var scriptsPath = srcDir + 'js/';
@@ -22,99 +29,6 @@ function getFolders(dir) {
             return fs.statSync(path.join(dir, file)).isDirectory();
         });
 }
-
-gulp.task('scripts', function () {
-
-    var file_dir = 'js/';
-    gulp.src(srcDir + file_dir + '*')
-        .pipe(changed(buildPath + file_dir))
-        .pipe(print())
-        .pipe(gulp.dest(buildPath + file_dir));
-
-    //custom folders
-
-    var custom_folders = srcDir + file_dir
-    var folders = getFolders(custom_folders);
-    var tasks = folders.map(function (folder) {
-        var src_folders = path.join(custom_folders, folder + '/*');
-        // find/join the directories
-        // minify
-        // write to output
-        return gulp.src(src_folders)
-            .pipe(changed(buildPath + file_dir))
-            .pipe(print())
-            .pipe(gulp.dest(buildPath + file_dir + folder));
-
-    });
-
-    return es.concat.apply(null, tasks);
-});
-
-gulp.task('html_files', function () {
-    //collect all files in root di
-    //move to dest folder
-    gulp.src(srcDir + '/*')
-        .pipe(print())
-        .pipe(gulp.dest(buildPath));
-
-});
-
-gulp.task('images', function () {
-
-    var file_dir = 'images/';
-    gulp.src(srcDir + file_dir + '*')
-        .pipe(changed(buildPath + file_dir))
-        .pipe(print())
-        .pipe(gulp.dest(buildPath + file_dir));
-
-    //custom folders
-
-    var custom_folders = srcDir + file_dir
-    var folders = getFolders(custom_folders);
-    var tasks = folders.map(function (folder) {
-        var src_folders = path.join(custom_folders, folder + '/*');
-        // find/join the directories
-        // minify
-        // write to output
-        return gulp.src(src_folders)
-            .pipe(changed(buildPath + file_dir))
-            .pipe(print())
-            .pipe(gulp.dest(buildPath + file_dir + folder));
-
-    });
-
-    return es.concat.apply(null, tasks);
-
-});
-
-
-gulp.task('fonts', function () {
-
-    var file_dir = 'images/';
-    gulp.src(srcDir + file_dir + '*')
-        .pipe(changed(buildPath + file_dir))
-        .pipe(print())
-        .pipe(gulp.dest(buildPath + file_dir));
-
-    //custom folders
-
-    var custom_folders = srcDir + file_dir
-    var folders = getFolders(custom_folders);
-    var tasks = folders.map(function (folder) {
-        var src_folders = path.join(custom_folders, folder + '/*');
-        // find/join the directories
-        // minify
-        // write to output
-        return gulp.src(src_folders)
-            .pipe(changed(buildPath + file_dir))
-            .pipe(print())
-            .pipe(gulp.dest(buildPath + file_dir + folder));
-
-    });
-
-    return es.concat.apply(null, tasks);
-
-});
 
 
 gulp.task('cleanup', function () {
@@ -168,5 +82,6 @@ gulp.task('copy_all', function () {
 });
 
 
-gulp.task('default', ['html_files', 'scripts', 'fonts', 'images'], function () {
+gulp.task('default', ['copy_all'], function () {
+
 });
