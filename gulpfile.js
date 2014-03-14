@@ -11,6 +11,13 @@ var watch = require('gulp-watch');
 var changed = require('gulp-changed');
 var streamque = require('streamqueue');
 
+/*
+ install gulp
+ npm install gulp gulp-util --save-dev
+ install required gulp plugins
+ npm install gulp-concat gulp-rename gulp-uglify gulp-clean gulp-watch gulp-changed streamqueue --save-dev
+ */
+
 //  create some useful variables
 var srcDir = './src/';
 var scriptsPath = srcDir + 'js/';
