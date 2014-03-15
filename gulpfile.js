@@ -15,7 +15,7 @@ var streamque = require('streamqueue');
  install gulp
  npm install gulp gulp-util --save-dev
  install required gulp plugins
- npm install event-stream gulp-concat gulp-rename gulp-uglify gulp-clean gulp-watch gulp-changed streamqueue gulp-print --save-dev
+ npm install event-stream gulp-concat gulp-rename gulp-uglify gulp-clean gulp-watch gulp-changed streamqueue gulp-print gulp-minify-css --save-dev
  */
 
 //  create some useful variables
@@ -132,16 +132,6 @@ gulp.task('cleanup', function () {
 });
 
 
-/*copy files/dependencies froom root to the source folder */
-
-gulp.task("srcbuild", function () {
-
-    gulp.src('./bootstrap/dist/css/*.css')
-        .pipe(gulp.dest('./src/js/vendor/'));
-
-});
-
-
 /*copies all the files from your src directory,
  src/dir -- (will not copy from scr/dir/dir )
  into your build
@@ -171,6 +161,16 @@ gulp.task('copy_all', function () {
     });
 
     return es.concat.apply(null, tasks);
+
+});
+
+
+/*copy files/dependencies froom root to the source folder */
+
+gulp.task("srcbuild", function () {
+
+    gulp.src('./bootstrap/dist/css/*.css')
+        .pipe(gulp.dest('./src/js/vendor/'));
 
 });
 
