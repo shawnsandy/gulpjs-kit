@@ -177,3 +177,8 @@ gulp.task('copy_all', function () {
 
 gulp.task('default', ['html_files', 'scripts', 'fonts', 'images'], function () {
 });
+
+
+// test - empty gulp task
+
+gulp.task('test', function(){});
