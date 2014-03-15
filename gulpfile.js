@@ -136,8 +136,8 @@ gulp.task('cleanup', function () {
 
 gulp.task("srcbuild", function () {
 
-//    gulp.src('./bootstrap/dist/css/*.css')
-//        .pipe(gulp.dest('./src/build/bootstrap/'))
+    gulp.src('./bootstrap/dist/css/*.css')
+        .pipe(gulp.dest('./src/js/vendor/'));
 
 });
 
