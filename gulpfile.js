@@ -132,6 +132,45 @@ gulp.task('cleanup', function () {
 });
 
 
+
+gulp.task('css', function () {
+
+    var file_dir = 'css/';
+    gulp.src(srcDir + file_dir + '*')
+        .pipe(changed(buildPath + file_dir))
+        .pipe(print())
+        .pipe(gulp.dest(buildPath + file_dir));
+
+    //custom folders
+
+    var custom_folders = srcDir + file_dir
+    var folders = getFolders(custom_folders);
+    var tasks = folders.map(function (folder) {
+        var src_folders = path.join(custom_folders, folder + '/*');
+        // find/join the directories
+        // minify
+        // write to output
+        return gulp.src(src_folders)
+            .pipe(changed(buildPath + file_dir))
+            .pipe(print())
+            .pipe(gulp.dest(buildPath + file_dir + folder));
+
+    });
+
+    return es.concat.apply(null, tasks);
+
+});
+
+
+gulp.task('cleanup', function () {
+
+    gulp.src('./build/', {read: false})
+        .pipe(clean());
+
+});
+
+
+
 /*copies all the files from your src directory,
  src/dir -- (will not copy from scr/dir/dir )
  into your build
