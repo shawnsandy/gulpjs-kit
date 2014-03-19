@@ -19,9 +19,10 @@ var streamque = require('streamqueue');
  */
 
 //  create some useful variables
+
 var srcDir = './src/';
 var scriptsPath = srcDir + 'js/';
-var buildPath = 'build/';
+var buildPath = 'deploy/';
 
 function getFolders(dir) {
     return fs.readdirSync(dir)
@@ -126,7 +127,7 @@ gulp.task('fonts', function () {
 
 gulp.task('cleanup', function () {
 
-    gulp.src('./build/', {read: false})
+    gulp.src(buildPath, {read: false})
         .pipe(clean());
 
 });
@@ -171,11 +172,13 @@ gulp.task('cleanup', function () {
 
 
 
-/*copies all the files from your src directory,
+/*
+copies all the files from your src directory,
  src/dir -- (will not copy from scr/dir/dir )
  into your build
  made for simple structure apps
  */
+
 gulp.task('copy_all', function () {
     //file directory
     var file_dir = '/';
