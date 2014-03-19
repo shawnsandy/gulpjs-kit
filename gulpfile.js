@@ -165,7 +165,7 @@ gulp.task('css', function () {
 
 gulp.task('cleanup', function () {
 
-    gulp.src('./build/', {read: false})
+    gulp.src(buildPath, {read: false})
         .pipe(clean());
 
 });
@@ -212,7 +212,11 @@ gulp.task('copy_all', function () {
 gulp.task("srcbuild", function () {
 
     gulp.src('./bootstrap/dist/css/*.css')
-        .pipe(gulp.dest('./src/js/vendor/'));
+        .pipe(gulp.dest(srcDir + 'bootstrap/css/'));
+    gulp.src('./bootstrap/dist/js/*.js')
+        .pipe(gulp.dest(srcDir + 'bootstrap/js/'));
+    gulp.src('./knockout/build/output/knockout-latest.js')
+        .pipe(gulp.dest(srcDir + 'js/vendor'));
 
 });
 
