@@ -10,7 +10,7 @@ A simple task runner / package management starter kit built with gulp.js for fro
 >
 
 ##What you need to know
-The main purpose of this kit is to help you with setup and destribution of you app, the src files are mainly for demonstration purposes however they were created using html5 boilerplate so you can use them as a starting point for your project as well, I do.
+The main purpose of this kit is to help you with setup and distribution of you app, the src files are mainly for demonstration purposes however they were created using html5 boilerplate so you can use them as a starting point for your project as well, I do.
 The Build directory
 Src
 Modules
@@ -21,10 +21,10 @@ Modules
 Three quick start options are available:
 
 - Clone the repo: `git clone https://github.com/shawnsandy/gulpjs-kit.git`.
-- Install the gulp-plugins
+- Install the gulp and all dependencies `npm install`
 - Copy your files into the src
-- Build and run gulp to build
-- Delete this guide and edit with your package info
+- Build and run `gulp to build`
+- Delete everything above end package including the line below it...
 
 ### What's included
 
