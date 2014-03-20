@@ -1,3 +1,6 @@
 [submodule "bootstrap"]
 	path = bootstrap
 	url = https://github.com/twbs/bootstrap.git
+[submodule "knockout"]
+	path = knockout
+	url = https://github.com/knockout/knockout.git
