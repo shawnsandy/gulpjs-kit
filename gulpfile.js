@@ -12,10 +12,14 @@ var changed = require('gulp-changed');
 var streamque = require('streamqueue');
 
 /*
- install gulp
- npm install gulp gulp-util --save-dev
- install required gulp plugins
- npm install event-stream gulp-concat gulp-rename gulp-uglify gulp-clean gulp-watch gulp-changed streamqueue gulp-print gulp-minify-css --save-dev
+ install gulp and dependencies the easy way
+ *** ---- quick gulp + all package plugins ---- ***
+ * npm install
+ install gulp and dependencies the coder way
+ *** ----- the coders way ----- ***
+ * npm install gulp gulp-util --save-dev
+ * ---- install required gulp plugins ---***
+ * npm install event-stream gulp-concat gulp-rename gulp-uglify gulp-clean gulp-watch gulp-changed streamqueue gulp-print gulp-minify-css --save-dev
  */
 
 //  create some useful variables
@@ -220,10 +224,7 @@ gulp.task("srcbuild", function () {
 
 });
 
-
 gulp.task('default', ['html_files', 'scripts', 'fonts', 'images'], function () {});
 
-
 // test - empty gulp task
-
 gulp.task('test', function(){});
