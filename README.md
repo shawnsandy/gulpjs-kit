@@ -3,7 +3,7 @@ GulpJS Boilerplate
 
 ##Description
 
-A simple task runner / package management starter kit built with gulp.js for front end designers/developers, it allows you to collect and package your files and assets for distribution.
+A simple boilerplate, starter kit or whatever you wish to call for automating common development task using gulp.js, it allows you to collect and package your files and assets for distribution.
 
 >###Why use a task runner?
 >In one word: automation. The less work you have to do when performing repetitive tasks like minification, compilation, unit testing, linting, etc, the easier your job becomes. After you've configured it, a task runner can do most of that mundane work for you—and your team—with basically zero effort *gruntjs.com*.
