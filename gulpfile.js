@@ -38,7 +38,7 @@ function getFolders(dir) {
 gulp.task('scripts', function () {
 
     var file_dir = 'js/';
-    gulp.src(srcDir + file_dir + '*')
+    gulp.src(srcDir + file_dir + '*.js')
         .pipe(changed(buildPath + file_dir))
         .pipe(print())
         .pipe(gulp.dest(buildPath + file_dir));
@@ -48,14 +48,15 @@ gulp.task('scripts', function () {
     var custom_folders = srcDir + file_dir
     var folders = getFolders(custom_folders);
     var tasks = folders.map(function (folder) {
-        var src_folders = path.join(custom_folders, folder + '/*');
+        var src_folders = path.join(custom_folders, folder + '/*.js');
         // find/join the directories
         // minify
         // write to output
         return gulp.src(src_folders)
             .pipe(changed(buildPath + file_dir))
             .pipe(print())
-            .pipe(gulp.dest(buildPath + file_dir + folder));
+            .pipe(gulp.dest(buildPath + file_dir + folder))
+            .pipe(print());
 
     });
 
@@ -91,7 +92,8 @@ gulp.task('images', function () {
         return gulp.src(src_folders)
             .pipe(changed(buildPath + file_dir))
             .pipe(print())
-            .pipe(gulp.dest(buildPath + file_dir + folder));
+            .pipe(gulp.dest(buildPath + file_dir + folder))
+            .pipe(print());
 
     });
 
@@ -102,7 +104,7 @@ gulp.task('images', function () {
 
 gulp.task('fonts', function () {
 
-    var file_dir = 'images/';
+    var file_dir = 'fonts/';
     gulp.src(srcDir + file_dir + '*')
         .pipe(changed(buildPath + file_dir))
         .pipe(print())
@@ -120,7 +122,8 @@ gulp.task('fonts', function () {
         return gulp.src(src_folders)
             .pipe(changed(buildPath + file_dir))
             .pipe(print())
-            .pipe(gulp.dest(buildPath + file_dir + folder));
+            .pipe(gulp.dest(buildPath + file_dir + folder))
+            .pipe(print());
 
     });
 
@@ -132,6 +135,7 @@ gulp.task('fonts', function () {
 gulp.task('cleanup', function () {
 
     gulp.src(buildPath, {read: false})
+        .pipe.print()
         .pipe(clean());
 
 });
@@ -141,7 +145,7 @@ gulp.task('cleanup', function () {
 gulp.task('css', function () {
 
     var file_dir = 'css/';
-    gulp.src(srcDir + file_dir + '*')
+    gulp.src(srcDir + file_dir + '*.css')
         .pipe(changed(buildPath + file_dir))
         .pipe(print())
         .pipe(gulp.dest(buildPath + file_dir));
@@ -151,14 +155,15 @@ gulp.task('css', function () {
     var custom_folders = srcDir + file_dir
     var folders = getFolders(custom_folders);
     var tasks = folders.map(function (folder) {
-        var src_folders = path.join(custom_folders, folder + '/*');
+        var src_folders = path.join(custom_folders, folder + '/*.css');
         // find/join the directories
         // minify
         // write to output
         return gulp.src(src_folders)
             .pipe(changed(buildPath + file_dir))
             .pipe(print())
-            .pipe(gulp.dest(buildPath + file_dir + folder));
+            .pipe(gulp.dest(buildPath + file_dir + folder))
+            .pipe(print());
 
     });
 
@@ -202,7 +207,8 @@ gulp.task('copy_all', function () {
         return gulp.src(src_folders)
             .pipe(changed(buildPath + file_dir))
             .pipe(print())
-            .pipe(gulp.dest(buildPath + file_dir + folder));
+            .pipe(gulp.dest(buildPath + file_dir + folder))
+            .pipe(print());
 
     });
 
@@ -216,15 +222,18 @@ gulp.task('copy_all', function () {
 gulp.task("srcbuild", function () {
 
     gulp.src('./bootstrap/dist/css/*.css')
-        .pipe(gulp.dest(srcDir + 'bootstrap/css/'));
+        .pipe(gulp.dest(srcDir + 'bootstrap/css/'))
+        .pipe(print());
     gulp.src('./bootstrap/dist/js/*.js')
-        .pipe(gulp.dest(srcDir + 'bootstrap/js/'));
+        .pipe(gulp.dest(srcDir + 'bootstrap/js/'))
+        .pipe(print());
     gulp.src('./knockout/build/output/knockout-latest.js')
-        .pipe(gulp.dest(srcDir + 'js/vendor'));
+        .pipe(gulp.dest(srcDir + 'js/vendor'))
+        .pipe(print());
 
 });
 
-gulp.task('default', ['html_files', 'scripts', 'fonts', 'images'], function () {});
+gulp.task('default', ['html_files', 'scripts', 'fonts', 'images','css'], function () {});
 
 // test - empty gulp task
 gulp.task('test', function(){});
