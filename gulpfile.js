@@ -145,10 +145,16 @@ gulp.task('cleanup', function () {
 gulp.task('css', function () {
 
     var file_dir = 'css/';
-    gulp.src(srcDir + file_dir + '*.css')
+
+    gulp.src([srcDir + file_dir + '*.css', srcDir + 'bootstrap/**/*.css'])
         .pipe(changed(buildPath + file_dir))
         .pipe(print())
         .pipe(gulp.dest(buildPath + file_dir));
+
+    gulp.src([srcDir + 'bootstrap/**/*.css'])
+        .pipe(changed(buildPath + 'bootstrap/**/.css'))
+        .pipe(print())
+        .pipe(gulp.dest(buildPath + 'bootstrap/'));
 
     //custom folders
 
@@ -175,6 +181,7 @@ gulp.task('css', function () {
 gulp.task('cleanup', function () {
 
     gulp.src(buildPath, {read: false})
+        .pipe(print())
         .pipe(clean());
 
 });
