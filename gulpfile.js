@@ -10,6 +10,8 @@ var print = require('gulp-print');
 var watch = require('gulp-watch');
 var changed = require('gulp-changed');
 var streamque = require('streamqueue');
+var replaceit = require('gulp-html-replace');
+var minifycss = require('gulp-minify-css');
 
 /*
  install gulp and dependencies the easy way
@@ -27,6 +29,8 @@ var streamque = require('streamqueue');
 var srcDir = './src/';
 var scriptsPath = srcDir + 'js/';
 var buildPath = 'deploy/';
+var js_replacements = ['js/app.min.js','js/main.min.js'];
+var css_replacements = ['css/main.min.css','css/stylesheet.min.css','styles.min.css'];
 
 function getFolders(dir) {
     return fs.readdirSync(dir)
@@ -40,8 +44,11 @@ gulp.task('scripts', function () {
     var file_dir = 'js/';
     gulp.src(srcDir + file_dir + '*.js')
         .pipe(changed(buildPath + file_dir))
-        .pipe(print())
-        .pipe(gulp.dest(buildPath + file_dir));
+        .pipe(gulp.dest(buildPath + file_dir))
+        .pipe(uglify())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest(buildPath + file_dir))
+        .pipe(print());
 
     //custom folders
 
@@ -91,7 +98,6 @@ gulp.task('images', function () {
         // write to output
         return gulp.src(src_folders)
             .pipe(changed(buildPath + file_dir))
-            .pipe(print())
             .pipe(gulp.dest(buildPath + file_dir + folder))
             .pipe(print());
 
@@ -108,7 +114,8 @@ gulp.task('fonts', function () {
     gulp.src(srcDir + file_dir + '*')
         .pipe(changed(buildPath + file_dir))
         .pipe(print())
-        .pipe(gulp.dest(buildPath + file_dir));
+        .pipe(gulp.dest(buildPath + file_dir))
+    ;
 
     //custom folders
 
@@ -146,10 +153,13 @@ gulp.task('css', function () {
 
     var file_dir = 'css/';
 
-    gulp.src([srcDir + file_dir + '*.css', srcDir + 'bootstrap/**/*.css'])
+    gulp.src([srcDir + file_dir + '*.css'])
         .pipe(changed(buildPath + file_dir))
-        .pipe(print())
-        .pipe(gulp.dest(buildPath + file_dir));
+        .pipe(gulp.dest(buildPath + file_dir))
+        .pipe(minifycss())
+        .pipe(rename({suffix: ".min"}))
+        .pipe(gulp.dest(buildPath + file_dir))
+        .pipe(print());
 
     gulp.src([srcDir + 'bootstrap/**/*.css'])
         .pipe(changed(buildPath + 'bootstrap/**/.css'))
@@ -240,7 +250,27 @@ gulp.task("srcbuild", function () {
 
 });
 
-gulp.task('default', ['html_files', 'scripts', 'fonts', 'images','css'], function () {});
+
+//replace dev scripts with minimified versions
+gulp.task('replace:min', function(){
+
+    gulp.src(srcDir + 'index.html')
+        .pipe(replaceit({
+            js: js_replacements,
+            css: css_replacements
+        }))
+        .pipe(gulp.dest(buildPath))
+        .pipe(print());
+
+});
+
+
+
+gulp.task('default', ['html_files', 'scripts', 'fonts', 'images','css','replace:min'], function () {
+
+});
 
 // test - empty gulp task
-gulp.task('test', function(){});
+gulp.task('test',['default'], function(){
+    gulp.start('replace:min');
+});
