@@ -266,7 +266,7 @@ gulp.task('replace:min', function(){
 
 
 
-gulp.task('default', ['html_files', 'scripts', 'fonts', 'images','css','replace:min'], function () {
+gulp.task('default', ['html_files', 'scripts', 'fonts', 'images','css'], function () {
 
 });
 
