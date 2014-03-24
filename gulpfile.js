@@ -10,7 +10,6 @@ var print = require('gulp-print');
 var watch = require('gulp-watch');
 var changed = require('gulp-changed');
 var streamque = require('streamqueue');
-var replaceit = require('gulp-html-replace');
 var minifycss = require('gulp-minify-css');
 
 /*
@@ -251,19 +250,6 @@ gulp.task("srcbuild", function () {
 });
 
 
-//replace dev scripts with minimified versions
-gulp.task('replace:min', function(){
-
-    gulp.src(srcDir + 'index.html')
-        .pipe(replaceit({
-            js: js_replacements,
-            css: css_replacements
-        }))
-        .pipe(gulp.dest(buildPath))
-        .pipe(print());
-
-});
-
 
 
 gulp.task('default', ['html_files', 'scripts', 'fonts', 'images','css'], function () {
@@ -272,5 +258,5 @@ gulp.task('default', ['html_files', 'scripts', 'fonts', 'images','css'], functio
 
 // test - empty gulp task
 gulp.task('test',['default'], function(){
-    gulp.start('replace:min');
+
 });
